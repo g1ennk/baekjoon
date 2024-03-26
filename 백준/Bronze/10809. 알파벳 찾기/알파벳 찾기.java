@@ -1,45 +1,40 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Initialize all alphabet into -1
-        HashMap<Character, Integer> alphabetMap = new HashMap<>();
-        for (char c = 'a'; c <= 'z'; c++) {
-            alphabetMap.put(c, -1);
-        }
-
-        // Read input string
+        // 1. Read input string
         String inputString = scanner.nextLine();
 
-        // Update position
-        updateMap(alphabetMap, inputString);
+        // 2. Initialize the alphabet array with -1
+        int[] alphabetArray = initializeAlphabetArray();
 
-        // Print alphabetMap after updating positions
-        printMap(alphabetMap);
+        // 3. Store the first appearance index of each character in the input string
+        storeFirstAppearance(inputString, alphabetArray);
 
+        // 4. Print the alphabet array
+        printAlphabetArray(alphabetArray);
     }
 
-    private static void updateMap(HashMap<Character, Integer> alphabetMap, String inputString) {
-        for (int i = 0; i < inputString.length(); i++) {
-            char currentChar = inputString.charAt(i);
-            int position = alphabetMap.get(currentChar);
+    public static int[] initializeAlphabetArray() {
+        int[] alphabetArray = new int[26];
+        Arrays.fill(alphabetArray, -1);
+        return alphabetArray;
+    }
 
-            if (position == -1) {
-                alphabetMap.put(currentChar, i);
+    public static void storeFirstAppearance(String inputString, int[] alphabetArray) {
+        for (int i = 0; i < inputString.length(); i++) {
+            int charIndex = inputString.charAt(i) - 'a';
+            if (alphabetArray[charIndex] == -1) {
+                alphabetArray[charIndex] = i;
             }
         }
     }
 
-    private static void printMap(HashMap<Character, Integer> alphabetMap) {
-        for (char key : alphabetMap.keySet()) {
-            int position = alphabetMap.get(key);
-            System.out.print(position + " ");
+    public static void printAlphabetArray(int[] alphabetArray) {
+        for (int index : alphabetArray) {
+            System.out.print(index + " ");
         }
     }
-
 }
