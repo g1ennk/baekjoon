@@ -5,16 +5,15 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // 1. Read the input number
-        int number = scanner.nextInt();
+        int inputNumber = scanner.nextInt();
 
-        // 2. Find the constructor
-        int constructor = findSmallestGenerator(number);
+        // 2. Find the smallest generator
+        int smallestGenerator = findSmallestGenerator(inputNumber);
 
         // 3. Print the result
-        System.out.println(constructor);
+        System.out.println(smallestGenerator);
     }
 
-    // 가장 작은 생성자를 찾는 함수
     public static int findSmallestGenerator(int n) {
         for (int candidate = 1; candidate < n; candidate++) {
             int sum = candidate + calculateDigitSum(candidate);
@@ -22,7 +21,7 @@ public class Main {
                 return candidate;
             }
         }
-        return 0; // 생성자가 없는 경우
+        return 0; // Returns 0 if no generator is found
     }
 
     private static int calculateDigitSum(int number) {
