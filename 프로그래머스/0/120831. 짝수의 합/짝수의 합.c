@@ -8,7 +8,7 @@ int solution(int n) {
     int sum = 0;
     
     // 더하기
-    for (int i = 0; i <= n; i += 2) {
+    for (int i = 2; i <= n; i += 2) {
         sum += i;
     }
     
