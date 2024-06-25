@@ -22,21 +22,10 @@ class Solution {
         }
         
         // 실패율이 높은 것부터 내림차순으로 정렬, 만약 실패율이 같다면 작은 key 값을 먼저
-        List<Map.Entry<Integer, Double>> list = new LinkedList<>(failRates.entrySet());
-        
-        list.sort((o1, o2) -> {
-            if(o2.getValue().compareTo(o1.getValue()) == 0) {
-                return o1.getKey().compareTo(o2.getKey());
-            } else {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
-        
-        int[] sortedStages = new int[N];
-        for(int i = 0; i < list.size(); i++) {
-            sortedStages[i] = list.get(i).getKey();
-        } 
-            
-        return sortedStages;
+        return failRates
+            .entrySet()
+            .stream()
+            .sorted((o1, o2) -> Double.compare(o2.getValue(), o1.getValue()))
+            .mapToInt(HashMap.Entry::getKey).toArray();
     }
 }
