@@ -4,24 +4,25 @@ class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         
-        // Read count
+        // Read the number of true divisors
         int count = sc.nextInt();
-        int[] numbers = new int[count];
+        int[] divisors = new int[count];
         
-        // Read and insert into array
+        // Read the true divisors
         for(int i = 0; i < count; i++) {
-            numbers[i] = sc.nextInt();
+            divisors[i] = sc.nextInt();
         }
         
-        // Sorting
-        Arrays.sort(numbers);
+        // Sort the array of divisors
+        Arrays.sort(divisors);
         
-        int answer = numbers[0] * numbers[numbers.length - 1];
-        if(count == 1) {
-            answer = numbers[0] * numbers[0];
-        }
+        // The original number N is the product of the smallest and largest divisor
+        int N = divisors[0] * divisors[divisors.length - 1];
         
-        // Print
-        System.out.println(answer);
+        // Print the result
+        System.out.println(N);
+        
+        // Close the scanner
+        sc.close();
     }
 }
