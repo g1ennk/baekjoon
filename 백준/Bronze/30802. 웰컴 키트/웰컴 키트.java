@@ -39,8 +39,12 @@ class Main {
     
     public static int calculateTShirtBundles(int[] sizes, int bundleSize) {
         int bundleCount = 0;
-        for (int size : sizes) {
-            bundleCount += (size + bundleSize - 1) / bundleSize; 
+        for(int size : sizes) {
+            if(size % bundleSize == 0) {
+                bundleCount += size / bundleSize;
+            } else {
+                bundleCount += (size / bundleSize) + 1;
+            }
         }
         
         return bundleCount;
