@@ -20,13 +20,20 @@ class Main {
     }
     
     public static int hashing(int strLen, String str) {
+        final int OFFSET = 96;
+        final int BASE = 31;
+        final int MOD = 1234567891;
+        
         int hashValue = 0;
+        long powerOfBase = 1;
+
         for(int i = 0; i < strLen; i++) {
-            int x = str.charAt(i) - 96;
-            int y = (int) Math.pow(31, i);
-            hashValue += x * y;
+            int charValue = str.charAt(i) - OFFSET;
+            hashValue = (int) ((hashValue + charValue * powerOfBase) % MOD);
+            powerOfBase = (powerOfBase * BASE) % MOD;
         }
         
         return hashValue;
     }
 }
+
