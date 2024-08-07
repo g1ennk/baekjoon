@@ -1,10 +1,9 @@
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 class Solution {
     public int[] solution(int[] numbers) {
-        // TreeSet 초기화
-        Set<Integer> sumSet = new TreeSet<>();
+        // Set 초기화
+        HashSet<Integer> sumSet = new HashSet<>();
         
         // 이중 반복문을 통해 두 개의 숫자를 뽑아 더해 sumSet에 저장
         for(int i = 0; i < numbers.length; i++) {
@@ -14,6 +13,6 @@ class Solution {
         }
         
         // stream -> Integer -> int -> array
-        return sumSet.stream().mapToInt(Integer::intValue).toArray();
+        return sumSet.stream().sorted().mapToInt(Integer::intValue).toArray();
     }
 }
