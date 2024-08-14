@@ -24,11 +24,9 @@ class Solution {
         return maxWidth * maxHeight;
     }
     
-    public static int[] swap(int[] xY) {
+    public static void swap(int[] xY) {
         int temp = xY[0];
         xY[0] = xY[1];
         xY[1] = temp;
-        
-        return xY;
     }
 }
