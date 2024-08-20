@@ -1,36 +1,26 @@
 import java.util.*;
 
+import java.util.*;
+
 class Solution {
-    public String solution(String[] participant, String[] completion) {
-        // 참가자 명단을 저장할 HashMap 생성
-        Map<String, Integer> map = new HashMap<>();
+    public String solution(String[] participants, String[] completion) {
+        Map <String, Integer> map = new HashMap<>();
         
-        // 참가자 명단을 순회하며 HashMap에 저장
-        for(String player : participant) {
-            // 이미 존재하는 참가자라면 값 증가, 없으면 기본값 0에서 1로 설정
-            map.put(player, map.getOrDefault(player, 0) + 1);
+        // 참가자 목록을 돌면서 이름을 맵에 저장 (이름이 이미 있으면 수를 증가)
+        for(String participant : participants) {
+            map.put(participant, map.getOrDefault(participant, 0) + 1);
         }
         
-        // 완주자 명단을 순회하며 HashMap에서 값 감소
-        for(String player : completion) {
-            // 해당 참가자가 한 명만 존재하면 HashMap에서 제거
-            if(map.get(player) == 1) {
-                map.remove(player);
-            } else {
-                // 두 명 이상 존재하면 값 감소
-                map.put(player, map.get(player) - 1);
+        // 완주자 목록을 돌면서 참가자 수를 감소시킴
+        for(String participant : completion) {
+            map.put(participant, map.get(participant) - 1);
+                
+            if(map.get(participant) == 0) {
+                map.remove(participant);
             }
         }
         
-        // 완주하지 못한 참가자를 저장할 변수
-        String answer = "";
-        
-        // HashMap에서 남아 있는 한 명의 참가자를 찾기
-        for(String uncomplete : map.keySet()) {
-            answer = uncomplete;
-        }
-        
-        // 완주하지 못한 참가자의 이름 반환
-        return answer;
+        // 맵에 남은 유일한 참가자 이름을 반환
+        return map.keySet().iterator().next();
     }
 }
