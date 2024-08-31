@@ -18,10 +18,6 @@ class Solution {
             count++;
         }
         
-        if(pQ.peek() < K) {
-            return -1;
-        }
-        
         // 3. 섞어야 하는 횟수 리턴하기
         return (pQ.peek() < K) ? -1 : count;
     }
