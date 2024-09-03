@@ -11,15 +11,12 @@ class Solution {
         }
         
         // 2. 정렬하기(두 수를 붙이면서 큰 걸 앞으로 정렬)
-        Comparator<String> biggerAppend = new Comparator<>() {
-            @Override
-            public int compare(String s1, String s2) {
-                String o1 = s1 + s2;
-                String o2 = s2 + s1;
-                return o2.compareTo(o1);
+        Arrays.sort(strArr, new Comparator<String>() {
+            public int compare(String o1, String o2) {
+                return (o2 + o1).compareTo(o1 + o2);
             }
-        };
-        Arrays.sort(strArr, biggerAppend);
+        });
+        
         // 예외 처리
         if(strArr[0].equals("0")) {
             return "0";
