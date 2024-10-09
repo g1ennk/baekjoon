@@ -18,19 +18,21 @@ public class Main {
         int maxScore = calculateMaxScore(stairs);
 
         // 4. 출력하기
-        System.out.println(calculateMaxScore(stairs));
+        System.out.println(maxScore);
 
         scanner.close();
     }
 
     private static int calculateMaxScore(int[] stairs) {
+        int N = stairs.length; // 계단의 개수
+
         // 예외 처리
-        if (stairs.length == 1) return stairs[0];
-        if (stairs.length == 2) return stairs[0] + stairs[1];
-        if (stairs.length == 3) return Math.max(stairs[0] + stairs[2], stairs[1] + stairs[2]);
+        if (N == 1) return stairs[0];
+        if (N == 2) return stairs[0] + stairs[1];
+        if (N == 3) return Math.max(stairs[0] + stairs[2], stairs[1] + stairs[2]);
 
         // dp 테이블 초기화
-        int[] dp = new int[stairs.length];
+        int[] dp = new int[N];
 
         // 초기값 설정
         dp[0] = stairs[0];
@@ -38,10 +40,10 @@ public class Main {
         dp[2] = Math.max(stairs[0] + stairs[2], stairs[1] + stairs[2]);
 
         // dp 테이블 채우기
-        for (int i = 3; i < stairs.length; i++) {
+        for (int i = 3; i < N; i++) {
             dp[i] = Math.max(dp[i - 2], dp[i - 3] + stairs[i - 1]) + stairs[i];
         }
 
-        return dp[stairs.length - 1];
+        return dp[N - 1];
     }
 }
