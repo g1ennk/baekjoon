@@ -3,24 +3,34 @@ import java.util.*;
 import java.util.*;
 
 class Solution {
-    public String solution(String[] participants, String[] completion) {
-        Map <String, Integer> map = new HashMap<>();
-        
-        // 참가자 목록을 돌면서 이름을 맵에 저장 (이름이 이미 있으면 수를 증가)
-        for(String participant : participants) {
-            map.put(participant, map.getOrDefault(participant, 0) + 1);
+    public static String solution(String[] participant, String[] completion) {
+        Map<String, Integer> map = new HashMap<>();
+        initGame(map, participant);
+        finishGame(map, completion);
+        return getUnfinishedParticipant(map);
+    }
+
+    private static void initGame(Map<String, Integer> map, String[] participant) {
+        for (String player : participant) {
+            map.put(player, map.getOrDefault(player, 0) + 1);
         }
-        
-        // 완주자 목록을 돌면서 참가자 수를 감소시킴
-        for(String participant : completion) {
-            map.put(participant, map.get(participant) - 1);
-                
-            if(map.get(participant) == 0) {
-                map.remove(participant);
+    }
+
+    private static void finishGame(Map<String, Integer> map, String[] completion) {
+        for (String player : completion) {
+            map.put(player, map.getOrDefault(player, 0) - 1);
+            if (map.get(player) == 0) {
+                map.remove(player);
             }
         }
-        
-        // 맵에 남은 유일한 참가자 이름을 반환
-        return map.keySet().iterator().next();
+    }
+
+    private static String getUnfinishedParticipant(Map<String, Integer> map) {
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > 0) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }
