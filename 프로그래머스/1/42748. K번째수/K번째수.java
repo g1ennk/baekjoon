@@ -1,24 +1,24 @@
 import java.util.*;
 
 class Solution {
-    public int[] solution(int[] array, int[][] commands) {
-        int[] answer = new int[commands.length];
-        
-        for(int i = 0; i < commands.length; i++) {
+    public static int[] solution (int[] array, int[][] commands) {
+        int[] result = new int[commands.length];
+
+        for (int i = 0; i < commands.length; i++) {
             int startIdx = commands[i][0] - 1;
             int endIdx = commands[i][1];
-            int selectIdx = commands[i][2] - 1;
-            
-            // 1. 자르고(i-1 ~ k)
-            int[] newArr = Arrays.copyOfRange(array, startIdx, endIdx);
-                    
-            // 2. 정렬하고(오름차순)
-            Arrays.sort(newArr);
+            int targetIdx = commands[i][2] - 1;
 
-            // 3. k번째 수 뽑기
-            answer[i] = newArr[selectIdx];
+            // 1. 자른다.
+            int[] slice = Arrays.copyOfRange(array, startIdx, endIdx);
+
+            // 2. 정렬한다.
+            Arrays.sort(slice);
+
+            // 3. 해당 숫자를 반환한다.
+            result[i] = slice[targetIdx];
         }
-        
-        return answer;
+
+        return result;
     }
 }
