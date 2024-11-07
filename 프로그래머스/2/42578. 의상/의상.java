@@ -1,22 +1,20 @@
 import java.util.*;
 
 class Solution {
-    public int solution(String[][] clothes) {
-        Map <String, Integer> map = new HashMap<>();
-        
-        int answer = 1;
-        for(int i = 0; i < clothes.length; i++) {
-            String clothesType = clothes[i][1];
-            map.put(clothesType, map.getOrDefault(clothesType, 0) + 1);
+    public static int solution(String[][] clothes) {
+        //  1. 해시맵 초기화
+        HashMap<String, Integer> map = new HashMap<>();
+        for (String[] clothe : clothes) {
+            String clothType = clothe[1];
+            map.put(clothType, map.getOrDefault(clothType, 0) + 1);
         }
-        
-        for(Map.Entry<String, Integer> entry : map.entrySet()) {
-            int count = entry.getValue() + 1;
-            answer *= count;
+
+        // 2. 경우의 수 계산하기
+        int combination = 1;
+        for (Integer value : map.values()) {
+            combination *= value + 1; // 아무것도 선택하지 않는 경우르 포함하기 위해
         }
-        
-        return answer - 1;
+
+        return combination - 1; // 아예 아무것도 입지 않는 경우의 수를 제외하기 위해
     }
 }
-
-
