@@ -1,39 +1,20 @@
+// package algorithm_lecture.basic;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        // 1. Get input
-        int a = scanner.nextInt();
-        int b = scanner.nextInt();
+        // 1. 두 자연수 입력 받기
+        int A = sc.nextInt();
+        int B = sc.nextInt();
 
-        // 2. Print the result
-        add(a,b);
-        subtract(a,b);
-        multiply(a,b);
-        divide(a,b);
-        modulus(a,b);
-
-        scanner.close();
-    }
-    public static void add(int a, int b) {
-        System.out.println(a + b);
-    }
-
-    public static void subtract(int a, int b) {
-        System.out.println(a - b);
-    }
-
-    public static void multiply(int a, int b) {
-        System.out.println(a * b);
-    }
-
-    public static void divide(int a, int b) {
-        System.out.println(a / b);
-    }
-
-    public static void modulus(int a, int b) {
-        System.out.println(a % b);
+        // 2. +, -, *, /, % 연산 차례대로 출력하기
+        System.out.println(A + B);
+        System.out.println(A - B);
+        System.out.println(A * B);
+        System.out.println(A / B);
+        System.out.println(A % B);
     }
 }
