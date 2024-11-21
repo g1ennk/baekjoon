@@ -1,33 +1,45 @@
+// package algorithm_lecture.basic;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+// X보다 작은 수
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        // 1. Get the total count of numbers and the input number
-        int count = scanner.nextInt();
-        int input = scanner.nextInt();
+        // 1. N과 X 입력받기
+        int N = sc.nextInt();
+        int X = sc.nextInt();
+        sc.nextLine();
 
-        // 2. Create an array to store the numbers
-        int[] numbers = new int[count];
-
-        // 3. Get the numbers from the input
-        for (int i = 0; i < count; i++) {
-            numbers[i] = scanner.nextInt();
+        // 2. N개의 수 입력받기
+        int[] array = new int[N];
+        for (int i = 0; i < N; i++) {
+            array[i] = sc.nextInt();
         }
 
-        // 4. Call the method to print numbers less than the input
-        printNumbersLessThanInput(numbers, input);
+        // 3. 결과
+        List<Integer> answer = solution(array, X);
 
-        scanner.close();
+        // 4. 결과 출력하기
+        for (int number : answer) {
+            System.out.print(number + " ");
+        }
+
+        sc.close();
     }
 
-    // Method to print numbers less than the input number
-    public static void printNumbersLessThanInput(int[] numbers, int input) {
-        for (int n : numbers) {
-            if (n < input) {
-                System.out.print(n + " ");
+    static List<Integer> solution(int[] array, int X) {
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] < X) {
+                list.add(array[i]);
             }
         }
+
+        return list;
     }
 }
