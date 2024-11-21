@@ -1,32 +1,27 @@
+// package algorithm_lecture.basic;
+
 import java.util.Scanner;
 
+// 시험 성적
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        // 1. Get the score
-        int score = scanner.nextInt();
+        // 1. 시험 성적 입력 받기
+        int grade = sc.nextInt();
 
-        // 2. Calculate the grade
-        char grade = calculateGrade(score);
-
-        // 3. Print the result
-        System.out.println(grade);
-
-        scanner.close();
-
-    }
-    public static char calculateGrade(int score) {
-        if (score >= 90 && score <= 100) {
-            return 'A';
-        } else if (score >= 80 && score < 90) {
-            return 'B';
-        } else if (score >= 70 && score < 80) {
-            return 'C';
-        } else if (score >= 60 && score < 70) {
-            return 'D';
+        // 2. 성적 출력하기
+        if (grade >= 90 && grade <= 100) {
+            System.out.println("A");
+        } else if (grade >= 80 && grade <= 89) {
+            System.out.println("B");
+        } else if (grade >= 70 && grade <= 79) {
+            System.out.println("C");
+        } else if (grade >= 60 && grade <= 69) {
+            System.out.println("D");
         } else {
-            return 'F';
+            System.out.println("F");
         }
+
     }
 }
