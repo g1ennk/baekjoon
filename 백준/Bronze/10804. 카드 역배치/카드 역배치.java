@@ -15,20 +15,20 @@ public class Main {
 
         // 2. 10번 뒤집기
         for (int i = 0; i < 10; i++) {
-            int start = sc.nextInt();
-            int end = sc.nextInt();
+            int start = sc.nextInt() - 1;
+            int end = sc.nextInt() - 1;
             swap(cards, start, end);
         }
 
         // 3. 결과 출력
-        for (int number : cards) {
-            System.out.print(number + " ");
+        StringBuilder answer = new StringBuilder();
+        for (int card : cards) {
+            answer.append(card).append(" ");
         }
+        System.out.println(answer);
     }
 
     static void swap(int[] cards, int start, int end) {
-        start--;
-        end--;
         while (start <= end) {
             int temp = cards[start];
             cards[start] = cards[end];
