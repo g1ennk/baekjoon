@@ -27,10 +27,13 @@ public class Main {
     }
 
     static void swap(int[] cards, int start, int end) {
-        for (int i = start; i <= end; i++) {
-            int temp = cards[i - 1];
-            cards[i - 1] = cards[end - 1];
-            cards[end - 1] = temp;
+        start--;
+        end--;
+        while (start <= end) {
+            int temp = cards[start];
+            cards[start] = cards[end];
+            cards[end] = temp;
+            start++;
             end--;
         }
     }
