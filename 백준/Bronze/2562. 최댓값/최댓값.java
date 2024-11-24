@@ -1,20 +1,28 @@
+// package algorithm_lecture.basic;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        int maxNum = Integer.MIN_VALUE;
+        Scanner sc = new Scanner(System.in);
+        
+        // 초기화
+        int max = Integer.MIN_VALUE;
         int maxIndex = -1;
-
-        // 입력 받음과 동시에 최댓값과 해당 인덱스 찾기
+        
+        // 최댓값과 해당 인덱스 찾기
         for (int i = 0; i < 9; i++) {
-            int num = scanner.nextInt();
-            if (num > maxNum) {
-                maxNum = num;
+            int number = sc.nextInt();
+
+            if (number > max) {
+                max = number;
                 maxIndex = i + 1;
             }
         }
-        System.out.println(maxNum + "\n" + maxIndex);
+        
+        // 출력
+        StringBuilder answer = new StringBuilder();
+        answer.append(max).append("\n").append(maxIndex);
+        System.out.println(answer);
     }
 }
