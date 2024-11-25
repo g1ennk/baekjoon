@@ -13,25 +13,25 @@ public class Main {
         int n = sc.nextInt();
 
         // 2. 모든 수열 입력 받기 (동시에 최댓값 구하기)
-        List<Integer> list = new ArrayList<>();
+        int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
             int num = sc.nextInt();
-            list.add(num);
+            arr[i] = num;
         }
 
         // 3. 자연수 x 입력 받기
         int x = sc.nextInt();
 
         // 4. 결과 출력하기
-        System.out.println(getCountMatches(list, x));
+        System.out.println(getCountMatches(arr, x));
 
     }
 
-    static int getCountMatches(List<Integer> list, int x) {
+    static int getCountMatches(int[] arr, int x) {
         int[] freq = new int[x + 1]; // 1부터 시작 && 최댓값까지만 배열 생성
         int matchCount = 0;
 
-        for (int number : list) {
+        for (int number : arr) {
             if (number >= x) {
                 continue;
             }
