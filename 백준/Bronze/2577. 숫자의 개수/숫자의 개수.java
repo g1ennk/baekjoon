@@ -1,51 +1,36 @@
+// package algorithm_lecture.array;
+
 import java.util.Scanner;
 
+// 숫자의 개수
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // 1. 3개의 숫자 받으면서 곱하기
-        int result = multiplyNumbers(scanner);
-
-        // 2. 문자열로 변환
-        String str = convertToString(result);
-
-        // 3. 숫자 등장 횟수 계산
-        int[] counts = countOccurrences(str);
-
-        // 4. 출력하기
-        printCounts(counts);
-    }
-    
-    // 숫자 곱하기
-    public static int multiplyNumbers(Scanner scanner) {
+        Scanner sc = new Scanner(System.in);
+        
+        // 1. 세 개의 자연수 입력받기
         int result = 1;
-        final int NUM_COUNT = 3;
-        for (int i = 0; i < NUM_COUNT; i++) {
-            result *= scanner.nextInt();
+        for (int i = 0; i < 3; i++) {
+            result *= sc.nextInt();
         }
-        return result;
+
+        // 2. 출력하기
+        System.out.println(getResult(result));
     }
 
-    // 문자열 변환
-    public static String convertToString(int result) {
-        return Integer.toString(result);
-    }
+    static String getResult(int result) {
+        int[] arr = new int[10];
 
-    // 숫자 등장 횟수 계산
-    public static int[] countOccurrences(String str) {
-        int[] counts = new int[10];
-        for (int i = 0; i < str.length(); i++) {
-            int digit = str.charAt(i) - '0';
-            counts[digit]++;
+        while (result != 0) {
+            int target = result % 10;
+            arr[target]++; // 빈도 수 증가
+            result /= 10;
         }
-        return counts;
-    }
 
-    // 등장 횟수 출력하기
-    public static void printCounts(int[] counts) {
-        for (int n : counts) {
-            System.out.println(n);
+        StringBuilder answer = new StringBuilder();
+        for (int num : arr) {
+            answer.append(num).append("\n");
         }
+
+        return answer.toString();
     }
 }
