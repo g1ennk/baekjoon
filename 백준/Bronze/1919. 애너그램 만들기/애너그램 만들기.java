@@ -21,20 +21,19 @@ public class Main {
     }
 
     static int countRemoves(String str1, String str2) {
-        int[] alphabet1 = new int[26];
-        int[] alphabet2 = new int[26];
+        int[] alphabets = new int[26];
 
         for (int i = 0; i < str1.length(); i++) {
-            alphabet1[str1.charAt(i) - 'a']++;
+            alphabets[str1.charAt(i) - 'a']++;
         }
-        
+
         for (int i = 0; i < str2.length(); i++) {
-            alphabet2[str2.charAt(i) - 'a']++;
+            alphabets[str2.charAt(i) - 'a']--;
         }
 
         int count = 0;
-        for (int i = 0; i < alphabet1.length; i++) {
-            count += Math.abs(alphabet1[i] - alphabet2[i]);
+        for (int i = 0; i < alphabets.length; i++) {
+            count += Math.abs(alphabets[i]);
         }
 
         return count;
