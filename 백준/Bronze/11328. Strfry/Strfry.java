@@ -14,7 +14,7 @@ public class Main {
         for (int i = 0; i < N; i++) {
             String str1 = sc.next();
             String str2 = sc.next();
-            answer.append(strfry(str1, str2)).append("\n");
+            answer.append(strfry1(str1, str2)).append("\n");
         }
 
         System.out.println(answer);
@@ -30,5 +30,27 @@ public class Main {
         Arrays.sort(arr2);
 
         return (Arrays.equals(arr1, arr2)) ? "Possible" : "Impossible";
+    }
+
+    static String strfry1(String str1, String str2) {
+        int[] alphabet = new int[26];
+
+        for (int i = 0; i < str1.length(); i++) {
+            char c = str1.charAt(i);
+            alphabet[c - 'a']++;
+        }
+
+        for (int i = 0; i < str2.length(); i++) {
+            char c = str2.charAt(i);
+            alphabet[c - 'a']--;
+        }
+
+        for (int i = 0; i < alphabet.length; i++) {
+            if (alphabet[i] != 0) {
+                return "Impossible";
+            }
+        }
+
+        return "Possible";
     }
 }
