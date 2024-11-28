@@ -1,69 +1,62 @@
-import java.util.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+// package algorithm_lecture.linkedList;
 
-class Main {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-        // Read the initial string and number of operations
-        String inputStr = br.readLine();
-        int count = Integer.parseInt(br.readLine());
+        // 초기 문자열 입력
+        String initialString = br.readLine();
+        int commandCount = Integer.parseInt(br.readLine());
 
-        // Call the edit function and print the final result
-        System.out.println(edit(inputStr, count, br));
-    }
-
-    public static String edit(String str, int count, BufferedReader br) throws IOException {
-        // Initializing stacks
-        Stack<Character> originalStack = new Stack<>();
-        Stack<Character> tempStack = new Stack<>();
-
-        // Push existing characters to originalStack
-        for (int i = 0; i < str.length(); i++) {
-            originalStack.push(str.charAt(i));
+        // LinkedList에 초기 문자열 삽입
+        LinkedList<Character> list = new LinkedList<>();
+        for (char c : initialString.toCharArray()) {
+            list.add(c);
         }
 
-        // Process operations
-        for (int i = 0; i < count; i++) {
-            String op = br.readLine();
-            switch (op.charAt(0)) {
+        // ListIterator 생성
+        ListIterator<Character> iterator = list.listIterator(list.size());
+
+        // 3. 명령어 처리
+        for (int i = 0; i < commandCount; i++) {
+            String command = br.readLine();
+            char commandType = command.charAt(0);
+
+            switch (commandType) {
                 case 'L':
-                    if (!originalStack.isEmpty()) {
-                        tempStack.push(originalStack.pop());
+                    if (iterator.hasPrevious()) {
+                        iterator.previous();
                     }
                     break;
                 case 'D':
-                    if (!tempStack.isEmpty()) {
-                        originalStack.push(tempStack.pop());
+                    if (iterator.hasNext()) {
+                        iterator.next();
                     }
                     break;
                 case 'B':
-                    if (!originalStack.isEmpty()) {
-                        originalStack.pop();
+                    if (iterator.hasPrevious()) {
+                        iterator.previous();
+                        iterator.remove();
                     }
                     break;
                 case 'P':
-                    originalStack.push(op.charAt(2));
+                    char data = command.charAt(2);
+                    iterator.add(data);
                     break;
             }
         }
 
-        // Append characters from originalStack to StringBuilder
-        StringBuilder sb = new StringBuilder();
-        while (!originalStack.isEmpty()) {
-            sb.append(originalStack.pop());
+        // 4. 출력
+        for (Character c : list) {
+            sb.append(c);
         }
-
-        // Reverse the StringBuilder to get the correct order
-        sb.reverse();
-
-        // Append characters from tempStack to StringBuilder
-        while (!tempStack.isEmpty()) {
-            sb.append(tempStack.pop());
-        }
-
-        return sb.toString();
+        System.out.println(sb);
     }
 }
