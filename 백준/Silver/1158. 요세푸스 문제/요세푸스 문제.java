@@ -1,39 +1,34 @@
+// package algorithm_lecture.linkedList;
+
 import java.util.*;
 
-class Main {
+// 요세푸스 문제
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        // Read total number of people and step count
-        int total = sc.nextInt();
-        int times = sc.nextInt();
-        
-        // Print the result
-        System.out.println(josephus(total, times));
-    }
-    
-    public static String josephus(int total, int times) {
-        Queue <Integer> queue = new ArrayDeque<>();
-        // Add all people to the queue
-        for(int i = 1; i <= total; i++) {
+        StringJoiner sj = new StringJoiner(", ");
+        StringBuilder sb = new StringBuilder();
+
+        // 입력
+        int N = sc.nextInt();
+        int K = sc.nextInt();
+
+        // 큐 추가
+        Queue<Integer> queue = new ArrayDeque<>();
+        for (int i = 1; i <= N; i++) {
             queue.add(i);
         }
-        
-        // List to store the result sequence
-        List<Integer> result = new LinkedList<>();
-        while(!queue.isEmpty()) {
-            for(int i = 0; i < times - 1; i++) {
-                queue.add(queue.poll());
+
+        // 리스트가 빌 때까지 반복
+        while (!queue.isEmpty()) {
+            for (int i = 0; i < K - 1; i++) {
+                queue.add(queue.poll()); // 맨 앞에 있는 요소를 맨 뒤로
             }
-            result.add(queue.poll());
-        }
-        
-        // Create a StringJoiner to format the result
-        StringJoiner sj = new StringJoiner(", ");
-        for(int number : result) {
-            sj.add(Integer.toString(number));
+            sj.add(queue.poll().toString()); // K번째 요소는 append
         }
 
-        return "<" + sj.toString() + ">";
+        // 최종 결과 출력
+        sb.append("<").append(sj).append(">");
+        System.out.println(sb);
     }
 }
