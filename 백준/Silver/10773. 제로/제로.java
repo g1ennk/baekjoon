@@ -1,41 +1,34 @@
-import java.util.*;
+// package algorithm_lecture.stack;
 
-class Main {
+import java.util.Scanner;
+import java.util.Stack;
+
+// 제로
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        // 배열의 크기 입력받기
-        int count = sc.nextInt();
-        
-        // 배열 요소 입력 받기
-        int[] arr = new int[count];
-        for(int i = 0; i < count; i++) {
-            arr[i] = sc.nextInt();
-        }
-        
-        // 결과 출력
-        System.out.println(solution(arr));
-
-    }
-    
-    public static int solution(int[] arr) {
         Stack<Integer> stack = new Stack<>();
-        
-        // 배열을 순회하며 스택에 추가, 0인 경우 제거
-        for(int command : arr) {
-            if(command == 0) {
+        int sum = 0;
+
+        // 1. 명렁어 개수 입력
+        int K = sc.nextInt();
+
+        // 2. 명령어 수행
+        for (int i = 0; i < K; i++) {
+            int number = sc.nextInt();
+            if (number == 0) {
                 stack.pop();
-            } else {
-                stack.push(command);
+                continue;
             }
+            stack.push(number);
         }
-        
-        // 남은 스택의 요소들의 합 계산
-        int total = 0;
-        while(!stack.isEmpty()) {
-            total += stack.pop();
+
+        // 3. 결과 합산
+        while (!stack.isEmpty()) {
+            sum += stack.pop();
         }
-        
-        return total;
+
+        // 4. 결과 출력
+        System.out.println(sum);
     }
 }
