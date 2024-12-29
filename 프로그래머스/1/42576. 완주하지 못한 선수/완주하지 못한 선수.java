@@ -4,33 +4,25 @@ import java.util.*;
 
 class Solution {
     public static String solution(String[] participant, String[] completion) {
-        Map<String, Integer> map = new HashMap<>();
-        initGame(map, participant);
-        finishGame(map, completion);
-        return getUnfinishedParticipant(map);
-    }
-
-    private static void initGame(Map<String, Integer> map, String[] participant) {
-        for (String player : participant) {
-            map.put(player, map.getOrDefault(player, 0) + 1);
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        // 참가한 선수 해시멥에 저장
+        for (String p : participant) {
+            map.put(p, map.getOrDefault(p, 0) + 1);
         }
-    }
-
-    private static void finishGame(Map<String, Integer> map, String[] completion) {
-        for (String player : completion) {
-            map.put(player, map.getOrDefault(player, 0) - 1);
-            if (map.get(player) == 0) {
-                map.remove(player);
+        
+        // 완주한 선수는 빼기 처리
+        for (String c : completion) {
+            map.put(c, map.get(c) - 1);
+        }
+        
+        // 값이 0보다 크면 완주못한 선수 바로 반환
+        for (String p : map.keySet()) {
+            if (map.get(p) > 0) {
+                return p;
             }
         }
-    }
 
-    private static String getUnfinishedParticipant(Map<String, Integer> map) {
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            if (entry.getValue() > 0) {
-                return entry.getKey();
-            }
-        }
         return null;
     }
 }
