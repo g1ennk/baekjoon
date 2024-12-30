@@ -1,33 +1,32 @@
 import java.util.*;
 
 class Solution {
-    public int[] solution(int[] progresses, int[] speeds) {
-        List <Integer> list = new ArrayList<>();
-        Queue <Integer> queue = new ArrayDeque<>();
-        
-        // 1. 배열을 돌면서 작업 기간 계산하기
-        for(int i = 0; i < progresses.length; i++) {
-            // 1-1. 계산 ((100 - progress) / speed)
-            int requiredDay = (int) Math.ceil((100.0 - progresses[i]) / speeds[i]);
-            
-            // 1-2. 큐에 넣기
+    public static int[] solution(int[] progresses, int[] speeds) {
+        List<Integer> deployments = new ArrayList<>();
+        Queue<Integer> queue = new ArrayDeque<>();
+
+        // 1. 작업 기간 계산
+        for (int i = 0; i < progresses.length; i++) {
+            int remainingWorks = 100 - progresses[i];
+            int requiredDay = (int)Math.ceil((double)remainingWorks / speeds[i]); // 올림 처리
+            // int requiredDay = (remainingWorks + speeds[i] - 1) / speeds[i];
             queue.offer(requiredDay);
         }
-           
-        // 2. 큐를 하나씩 빼면서 처음 작업을 기준으로 작다면 카운트 올리고, 크다면 리스트에 추가 후 카운트 초기화
-        while(!queue.isEmpty()) {
-            int standard = queue.poll();
-            int count = 1;
-            
-            while(!queue.isEmpty() && queue.peek() <= standard) {
-                count++;
+
+        // 2. 각 배포마다 몇 개 기능 개발 가능한지 계산
+        while (!queue.isEmpty()) {
+            // 초기 작업 세팅
+            int current = queue.poll();
+            int feature = 1;
+
+            // 초기 작업보다 적은 개발 기간은 빼고, 더 긴 작업이 나올 경우 탈출
+            while (!queue.isEmpty() && current >= queue.peek()) {
                 queue.poll();
+                feature++;
             }
-            list.add(count);
-            
+            deployments.add(feature);
         }
-        
-        // 3. 리스트를 배열로 변환하여 리턴
-        return list.stream().mapToInt(Integer :: intValue).toArray();
+
+        return deployments.stream().mapToInt(Integer::intValue).toArray();
     }
 }
