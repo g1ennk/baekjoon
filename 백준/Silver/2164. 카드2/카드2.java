@@ -1,31 +1,31 @@
-import java.util.*;
+// package algorithm_lecture.queue;
 
-class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        int n = sc.nextInt();
-        
-        System.out.println(getLastCard(n));
-    }
-    
-    public static int getLastCard(int n) {
-        ArrayDeque<Integer> queue = new ArrayDeque<Integer>();
-        
-        // Put cards
-        for(int i = 1; i <= n; i++) {
-            queue.add(i);
+import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        Queue<Integer> queue = new LinkedList<>();
+
+        // 1. 정수 N 입력받기
+        int N = Integer.parseInt(br.readLine());
+
+        // 2. 1부터 N까지 큐에 넣기
+        for (int i = 1; i <= N; i++) {
+            queue.offer(i);
         }
-        
-        while(queue.size() != 1) {
-            // 1. Discard the top card
-            queue.poll();
-            
-            // 2. Put the next top card into the bottom
-            queue.addLast(queue.poll());
+
+        // 3. 1장이 남을 때까지
+        while (queue.size() != 1) {
+            queue.poll(); // 제일 위 카드 버리고
+            queue.offer(queue.poll());
         }
-        
-        return queue.poll();
+
+        // 4. 마지막 남은 카드 출력
+        bw.write(String.valueOf(queue.poll()));
+        bw.flush();
     }
 }
-
