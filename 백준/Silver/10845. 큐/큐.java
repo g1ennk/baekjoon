@@ -1,38 +1,51 @@
-import java.util.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+// package algorithm_lecture.queue;
 
-class Main {
+import java.io.*;
+import java.util.*;
+
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        Deque<Integer> queue = new ArrayDeque<>();
 
-        int count = Integer.parseInt(br.readLine());
-        for (int i = 0; i < count; i++) {
-            String command = br.readLine();
+        // 1. 명렁어의 개수 입력받기
+        int N = Integer.parseInt(br.readLine());
 
-            switch (command.split(" ")[0]) {
+        // 2. 명령어 실행
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String command = st.nextToken();
+
+            switch (command) {
                 case "push":
-                    int number = Integer.parseInt(command.split(" ")[1]);
-                    queue.add(number);
+                    queue.offer(Integer.parseInt(st.nextToken()));
                     break;
+
                 case "pop":
-                    System.out.println(queue.isEmpty() ? -1 : queue.poll());
+                    sb.append((!queue.isEmpty()) ? String.valueOf(queue.poll()) : "-1").append("\n");
                     break;
+
                 case "size":
-                    System.out.println(queue.size());
+                    sb.append(queue.size()).append("\n");
                     break;
+
                 case "empty":
-                    System.out.println(queue.isEmpty() ? 1 : 0);
+                    sb.append((queue.isEmpty()) ? "1" : "0").append("\n");
                     break;
+
                 case "front":
-                    System.out.println(queue.isEmpty() ? -1 : queue.getFirst());
+                    sb.append((!queue.isEmpty()) ? queue.peekFirst() : "-1").append("\n");
                     break;
+
                 case "back":
-                    System.out.println(queue.isEmpty() ? -1 : queue.getLast());
-                    break;
+                    sb.append((!queue.isEmpty()) ? queue.peekLast() : "-1").append("\n");
             }
         }
+        
+        // 3. 결과 출력
+        bw.write(sb.toString());
+        bw.flush();
     }
 }
