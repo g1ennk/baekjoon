@@ -1,51 +1,103 @@
-import java.util.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+// package algorithm_lecture.deque;
 
-class Main {
+import java.io.*;
+import java.util.StringTokenizer;
+
+public class Main {
+    static int[] deque;
+    static int front;
+    static int rear;
+    static int size;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        // 1. Read count
-        int count = Integer.parseInt(br.readLine());
-        
-        // 2. Execute
-        ArrayDeque<Integer> queue = new ArrayDeque<>();
-        for(int i = 0; i < count; i++) {
-            String command = br.readLine();
-            switch(command.split(" ")[0]) {
+        // 1. 명령어의 개수 입력받기
+        int N = Integer.parseInt(br.readLine());
+
+        // 2. 명령어 실행
+        init(N);
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String command = st.nextToken();
+
+            switch (command) {
                 case "push_front":
-                    int frontNumber = Integer.parseInt(command.split(" ")[1]);
-                    queue.addFirst(frontNumber);
+                    pushFront(Integer.parseInt(st.nextToken()));
                     break;
                 case "push_back":
-                    int backNumber = Integer.parseInt(command.split(" ")[1]);
-                    queue.addLast(backNumber);
+                    pushBack(Integer.parseInt(st.nextToken()));
                     break;
                 case "pop_front":
-                    Integer frontPop = queue.pollFirst();
-                    System.out.println((frontPop == null) ? -1 : frontPop);
+                    bw.write(popFront() + "\n");
                     break;
                 case "pop_back":
-                    Integer backPop = queue.pollLast();
-                    System.out.println((backPop == null) ? -1 : backPop);
+                    bw.write(popBack() + "\n");
                     break;
                 case "size":
-                    System.out.println(queue.size());
+                    bw.write(size + "\n");
                     break;
                 case "empty":
-                    System.out.println((queue.isEmpty()) ? 1 : 0);
+                    bw.write(empty() + "\n");
                     break;
                 case "front":
-                    Integer front = queue.peekFirst();
-                    System.out.println((front == null) ? -1 : front);
+                    bw.write(front() + "\n");
                     break;
                 case "back":
-                    Integer back = queue.peekLast();
-                    System.out.println((back == null) ? -1 : back);
+                    bw.write(back() + "\n");
                     break;
             }
         }
+
+        // 3. 출력
+        bw.flush();
+    }
+
+    static void init(int capacity) {
+        deque = new int[capacity * 2];
+        front = capacity;
+        rear = capacity;
+        size = 0;
+    }
+
+    static void pushFront(int value) {
+        deque[--front] = value;
+        size++;
+    }
+
+    static void pushBack(int value) {
+        deque[rear++] = value;
+        size++;
+    }
+
+    static int popFront() {
+        if (isEmpty()) return -1;
+        size--;
+        return deque[front++];
+    }
+
+    static int popBack() {
+        if (isEmpty()) return -1;
+        size--;
+        return deque[--rear];
+    }
+
+    static int empty() {
+        return isEmpty() ? 1 : 0;
+    }
+
+    static boolean isEmpty() {
+        return size == 0;
+    }
+
+    static int front() {
+        if (isEmpty()) return -1;
+        return deque[front];
+    }
+
+    static int back() {
+        if (isEmpty()) return -1;
+        return deque[rear - 1];
     }
 }
