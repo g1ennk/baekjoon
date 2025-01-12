@@ -1,51 +1,49 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+// package algorithm_lecture.stackApp;
 
-class Main {
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        // 여는 괄호와 닫는 괄호 매핑
-        Map<Character, Character> bracketsMap = new HashMap<>();
-        bracketsMap.put(')', '(');
-        bracketsMap.put(']', '[');
-
+        // 1. 입력값이 온점일 때까지 반복
         while (true) {
-            // 종료조건: '.'이 나오면 종료
+            // 2. 문자열 입력받기
             String input = br.readLine();
+
             if (input.equals(".")) {
                 break;
             }
 
-            // 초기화
-            Stack<Character> stack = new Stack<>();
-            boolean isBalanced = true;
-
-            for (int i = 0; i < input.length(); i++) {
-                char c = input.charAt(i);
-
-                // 여는 괄호가 나오면 스택에 푸시
-                if (bracketsMap.containsValue(c)) {
-                    stack.push(c);
-                }
-                // 각각의 닫는 괄호가 나왔을 때
-                else if (bracketsMap.containsKey(c)) {
-                    if (stack.isEmpty() || stack.peek() != bracketsMap.get(c)) {
-                        isBalanced = false;
-                        break;
-                    } else {
-                        stack.pop();
-                    }
-                }
-            }
-
-            if (!stack.empty()) {
-                isBalanced = false;
-            }
-
-            System.out.println(isBalanced ? "yes" : "no");
+            // 3. 균형인지 아닌지 확인
+            bw.write(isBalanced(input) + "\n");
         }
+
+        // 4. 출력하기
+        bw.flush();
+    }
+
+    private static String isBalanced(String input) {
+        Stack<Character> stack = new Stack<>();
+        Map<Character, Character> map = new HashMap<>();
+        map.put(')', '(');
+        map.put(']', '[');
+
+        for (char c : input.toCharArray()) {
+            if (c == '(' || c == '[') {
+                stack.push(c);
+            } else if (c == ')' || c == ']') {
+                if (stack.isEmpty() || stack.peek() != map.get(c)) {
+                    return "no";
+                }
+                stack.pop();
+            }
+        }
+
+        return stack.isEmpty() ? "yes" : "no";
     }
 }
