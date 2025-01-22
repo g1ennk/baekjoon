@@ -1,81 +1,78 @@
-import java.util.Scanner;
+// package algorithm_lecture.bfs;
 
+import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+// 기본 문제 1012: 유기농 배추
 public class Main {
 
-    private static int[][] field;
-    private static boolean[][] visited;
-    private static int M,N;
+    static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        // 1. 테스트 케이스 T 받기
-        int T = scanner.nextInt();
-        int[] answers = new int[T];
-
-        // 2. 테스트 케이스만큼 실행하기
+        // 1. 테스트 케이스 수 입력 받기
+        int T = Integer.parseInt(br.readLine());
         for (int i = 0; i < T; i++) {
-            // 3. 가로 M,  새로 N, 배추 위치의 개수 K 입력받기
-            M = scanner.nextInt();
-            N = scanner.nextInt();
-            int K = scanner.nextInt();
+            // 2. 가로 M, 세로 N, 배추가 심어져 있는 위치의 개수 K 입력 받기
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int M = Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+            int K = Integer.parseInt(st.nextToken());
 
-            // 4. 배추밭 초기화
-            initField(M, N);
+            int[][] field = new int[M][N];
 
-            // 5. 배추 위치 입력 받아 필드에 표기
+            // 3. 배추의 위치 입력 받기
             for (int j = 0; j < K; j++) {
-                int x = scanner.nextInt();
-                int y = scanner.nextInt();
-                field[y][x] = 1;
+                st = new StringTokenizer(br.readLine());
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
+                field[x][y] = 1;
             }
 
-            // 6. 지렁이 개수를 계산하기
-            answers[i] = calculateWarmCount();
-
-        }
-
-        // 7. 정답 출력하기
-        for (int answer : answers) {
-            System.out.println(answer);
-        }
-
-        scanner.close();
-    }
-
-    private static int calculateWarmCount() {
-        int warmCount = 0;
-
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                if (field[i][j] == 1 && !visited[i][j]) {
-                    dfs(i, j);
-                    warmCount++;
+            // 4. 탐색하기
+            int count = 0;
+            for (int k = 0; k < M; k++) {
+                for (int l = 0; l < N; l++) {
+                    if (field[k][l] == 1) {
+                        bfs(field, k, l);
+                        count++;
+                    }
                 }
             }
+
+            bw.write(count + "\n");
         }
 
-        return warmCount;
+        // 5. 결과 출력하기
+        bw.flush();
     }
 
-    private static void initField(int M, int N) {
-        field = new int[N][M];
-        visited = new boolean[N][M];
-    }
+    private static void bfs(int[][] field, int k, int l) {
+        Queue<int[]> queue = new LinkedList<>();
 
-    private static void dfs(int x, int y) {
-        // 범위를 벗어나는 경우 + 이미 방문한 경우 + 배추가 있는 경우
-        if (x < 0 || y < 0 || x >= N || y >= M || visited[x][y] || field[x][y] == 0) {
-            return;
+        // 초기화
+        queue.add(new int[]{k, l});
+        field[k][l] = 0;
+
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
+            // 상하좌우 탐색
+            for (int[] dir : DIRECTIONS) {
+                int newX = cur[0] + dir[0];
+                int newY = cur[1] + dir[1];
+
+                // 범위 체크
+                if (newX < 0 || newX >= field.length || newY < 0 || newY >= field[0].length || field[newX][newY] != 1)
+                    continue;
+
+                // 방문 처리
+                field[newX][newY] = 0;
+                queue.add(new int[]{newX, newY});
+            }
         }
-
-        visited[x][y] = true;
-
-        // 상하좌우 확인하기
-        dfs(x, y + 1);
-        dfs(x, y - 1);
-        dfs(x - 1, y);
-        dfs(x + 1, y);
     }
-
 }
